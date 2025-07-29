@@ -117,3 +117,25 @@ button:hover {
   white-space: nowrap;
   transform: translate(-50%, -125%);
 }
+
+#home-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em 0;
+}
+
+.link-button {
+  background: #6ec6ff;
+  color: #fff;
+  padding: 1em 2em;
+  margin: 1em;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.2em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.link-button:hover {
+  background: #64b5f6;
+}
