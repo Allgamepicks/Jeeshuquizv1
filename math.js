@@ -12,11 +12,19 @@ function nextQuestion() {
   const displayB = op === '-' ? values[1] : b;
   questionEl.textContent = `${displayA} ${op} ${displayB} = ?`;
 
+  const a = Math.floor(Math.random() * 10) + 1;
+  const b = Math.floor(Math.random() * 10) + 1;
+  const op = Math.random() < 0.5 ? '+' : '-';
+  const answer = op === '+' ? a + b : a - b;
+  const questionEl = document.getElementById('math-question');
+  questionEl.textContent = `${a} ${op} ${b} = ?`;
+
   const optionsDiv = document.getElementById('math-options');
   optionsDiv.innerHTML = '';
   const options = [answer];
   while (options.length < 4) {
     let val = answer + Math.floor(Math.random() * 101) - 50;
+    let val = answer + Math.floor(Math.random() * 5) - 2;
     if (!options.includes(val)) options.push(val);
   }
   shuffle(options).forEach(v => {
