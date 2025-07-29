@@ -15,7 +15,9 @@ async function init() {
 }
 
 async function loadCountries() {
-  const res = await fetch('https://restcountries.com/v3.1/all');
+  // request only the fields we need to avoid a large payload
+  const url = 'https://restcountries.com/v3.1/all?fields=name,cca2,cca3,ccn3,capital,region,population';
+  const res = await fetch(url);
   const data = await res.json();
   countriesData = data.map(c => {
     const obj = {
