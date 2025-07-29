@@ -57,6 +57,8 @@ async function loadMap() {
     geoData = await d3.json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson');
   } catch (err) {
     console.error('Failed to load map data', err);
+    document.getElementById('error').textContent = 'Failed to load map.';
+    document.getElementById('error').classList.remove('hidden');
     return;
   }
   const width = Math.min(1200, window.innerWidth * 0.95);
