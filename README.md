@@ -9,4 +9,4 @@ This simple app displays a world map that children can explore. Clicking a count
 - Flags served through [flagcdn.com](https://flagcdn.com/).
 - Quiz mode keeps score out of 20 and mixes different question types.
 
-To run locally, simply open `index.html` in a modern browser with internet access.
+To run locally, serve the files with any simple HTTP server (for example `npx serve`) and open `index.html` in a modern browser with internet access. Directly opening the file may block network requests in some browsers.

@@ -9,7 +9,9 @@ let score = 0;
 let questionsAsked = 0;
 
 async function init() {
-  await Promise.all([loadCountries(), loadMap()]);
+  // Load data first so clicking works immediately once map appears
+  await loadCountries();
+  await loadMap();
   document.getElementById('quizBtn').onclick = startQuizMode;
   document.getElementById('quiz-exit').onclick = exitQuizMode;
 }
@@ -17,8 +19,14 @@ async function init() {
 async function loadCountries() {
   // request only the fields we need to avoid a large payload
   const url = 'https://restcountries.com/v3.1/all?fields=name,cca2,cca3,ccn3,capital,region,population';
-  const res = await fetch(url);
-  const data = await res.json();
+  let data;
+  try {
+    const res = await fetch(url);
+    data = await res.json();
+  } catch (err) {
+    console.error('Failed to load country data', err);
+    return;
+  }
   countriesData = data.map(c => {
     const obj = {
       id: c.cca3,
@@ -39,7 +47,13 @@ async function loadCountries() {
 }
 
 async function loadMap() {
-  const geoData = await d3.json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson');
+  let geoData;
+  try {
+    geoData = await d3.json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson');
+  } catch (err) {
+    console.error('Failed to load map data', err);
+    return;
+  }
   const width = Math.min(960, window.innerWidth * 0.9);
   const height = width * 0.5;
   const projection = d3.geoNaturalEarth1().fitSize([width, height], geoData);
