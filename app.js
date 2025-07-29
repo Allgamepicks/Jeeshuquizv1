@@ -9,14 +9,23 @@ let score = 0;
 let questionsAsked = 0;
 
 async function init() {
+  // Load both in parallel for faster startup
   await Promise.all([loadCountries(), loadMap()]);
   document.getElementById('quizBtn').onclick = startQuizMode;
   document.getElementById('quiz-exit').onclick = exitQuizMode;
 }
 
 async function loadCountries() {
-  const res = await fetch('https://restcountries.com/v3.1/all');
-  const data = await res.json();
+  const url = 'https://restcountries.com/v3.1/all?fields=name,cca2,cca3,ccn3,capital,region,population';
+  let data;
+  try {
+    const res = await fetch(url);
+    data = await res.json();
+  } catch (err) {
+    console.error('Failed to load country data', err);
+    return;
+  }
+
   countriesData = data.map(c => {
     const obj = {
       id: c.cca3,
@@ -37,7 +46,14 @@ async function loadCountries() {
 }
 
 async function loadMap() {
-  const geoData = await d3.json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson');
+  let geoData;
+  try {
+    geoData = await d3.json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson');
+  } catch (err) {
+    console.error('Failed to load map data', err);
+    return;
+  }
+
   const width = Math.min(960, window.innerWidth * 0.9);
   const height = width * 0.5;
   const projection = d3.geoNaturalEarth1().fitSize([width, height], geoData);
@@ -154,4 +170,9 @@ function shuffle(arr) {
   return arr;
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// Initialize app once DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
