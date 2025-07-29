@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>World Map for Kids</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
   <header>
@@ -15,6 +16,8 @@
     <div id="map-container">
       <!-- SVG map will be injected here -->
     </div>
+    <div id="error" class="hidden"></div>
+    <div id="tooltip" class="hidden"></div>
     <div id="info-panel" class="hidden">
       <h2 id="country-name"></h2>
       <img id="country-flag" alt="Flag" />
@@ -22,6 +25,7 @@
     </div>
     <div id="quiz-panel" class="hidden">
       <h2 id="quiz-question"></h2>
+      <p id="quiz-score"></p>
       <div id="quiz-options"></div>
       <button id="quiz-exit">Exit Quiz</button>
     </div>
