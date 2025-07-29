@@ -7,6 +7,7 @@ let quizMode = false;
 let currentQuiz = null;
 let score = 0;
 let questionsAsked = 0;
+let dataLoaded = false;
 
 async function init() {
   // Load both in parallel for faster startup
@@ -21,8 +22,12 @@ async function loadCountries() {
   try {
     const res = await fetch(url);
     data = await res.json();
+    dataLoaded = true;
+    document.getElementById('error').classList.add('hidden');
   } catch (err) {
     console.error('Failed to load country data', err);
+    document.getElementById('error').textContent = 'Failed to load country data.';
+    document.getElementById('error').classList.remove('hidden');
     return;
   }
 
@@ -51,11 +56,13 @@ async function loadMap() {
     geoData = await d3.json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson');
   } catch (err) {
     console.error('Failed to load map data', err);
+    document.getElementById('error').textContent = 'Failed to load map.';
+    document.getElementById('error').classList.remove('hidden');
     return;
   }
 
-  const width = Math.min(960, window.innerWidth * 0.9);
-  const height = width * 0.5;
+  const width = Math.min(1200, window.innerWidth * 0.95);
+  const height = width * 0.55;
   const projection = d3.geoNaturalEarth1().fitSize([width, height], geoData);
   const path = d3.geoPath().projection(projection);
 
@@ -77,10 +84,29 @@ async function loadMap() {
         if (!quizMode) showCountryInfo(country, event.target);
         else handleQuizClick(country);
       }
+    })
+    .on('mouseover', (event, d) => {
+      const country = countryByIso3[d.id] || countryByIso2[d.id] || countryByNum[d.id];
+      if (country) {
+        const tooltip = document.getElementById('tooltip');
+        tooltip.textContent = country.name;
+        tooltip.style.left = event.pageX + 'px';
+        tooltip.style.top = event.pageY + 'px';
+        tooltip.classList.remove('hidden');
+      }
+    })
+    .on('mousemove', (event) => {
+      const tooltip = document.getElementById('tooltip');
+      tooltip.style.left = event.pageX + 'px';
+      tooltip.style.top = event.pageY + 'px';
+    })
+    .on('mouseout', () => {
+      document.getElementById('tooltip').classList.add('hidden');
     });
 }
 
 function showCountryInfo(country, el) {
+  if (!dataLoaded) return;
   document.getElementById('info-panel').classList.remove('hidden');
   document.getElementById('quiz-panel').classList.add('hidden');
   document.getElementById('country-name').textContent = country.name;
@@ -93,6 +119,10 @@ function showCountryInfo(country, el) {
 }
 
 function startQuizMode() {
+  if (!dataLoaded) {
+    alert('Country data not loaded. Check your internet connection.');
+    return;
+  }
   quizMode = true;
   score = 0;
   questionsAsked = 0;
@@ -111,6 +141,12 @@ function exitQuizMode() {
 }
 
 function nextQuiz() {
+  if (!dataLoaded || countriesData.length === 0) {
+    alert('Country data not loaded. Quiz unavailable.');
+    exitQuizMode();
+    return;
+  }
+
   const quizTypes = ['find-country', 'find-flag'];
   const type = quizTypes[Math.floor(Math.random() * quizTypes.length)];
   if (type === 'find-country') quizFindCountry();
@@ -170,7 +206,6 @@ function shuffle(arr) {
   return arr;
 }
 
-// Initialize app once DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
