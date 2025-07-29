@@ -1,15 +1,24 @@
 # Interactive World Map for Kids
 
-This project now includes multiple learning activities for kids. The original world map lets children explore countries and flags. Two new pages provide a quick math quiz and a simple English spelling game with pictures.
+This project includes multiple learning activities for kids. The original interactive world map lets children explore countries and flags. Two additional pages offer a quick math quiz and a simple English spelling game with pictures.
 
 ## Features
 
-- **Responsive SVG map** rendered with [D3.js](https://d3js.org/).
-- Country data loaded from [restcountries.com](https://restcountries.com/).
-- Flags served through [flagcdn.com](https://flagcdn.com/).
-- Quiz mode keeps score out of 20 and mixes different question types.
-- Hovering a country shows its name as a tooltip on the map.
-- Separate math and spelling quizzes accessible from the home page.
+- 🌍 **Interactive world map** rendered using [D3.js](https://d3js.org/)
+- 📡 Country data loaded from [restcountries.com](https://restcountries.com/)
+- 🚩 Flags served from [flagcdn.com](https://flagcdn.com/)
+- 🎯 Quiz mode with 20 randomized questions (identify countries or match flags)
+- 🖱️ Hovering over a country shows its name as a tooltip
+- ➕ Includes separate **Math** and **Spelling** quiz pages accessible from the home page
 
-To run locally, serve the files with any simple HTTP server (for example `npx serve`) and open `index.html` in a modern browser with internet access. Directly opening the file may block network requests in some browsers.
-If the app cannot reach the country API, an error message is shown below the map.
+## How to Run Locally
+
+> ⚠️ Opening `index.html` directly may block network requests due to browser security. Always use a local server.
+
+### Option 1: With Node.js
+
+1. Install [Node.js](https://nodejs.org/) (if not already)
+2. In the project folder, run:
+
+   ```bash
+   npx serve
