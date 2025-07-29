@@ -79,3 +79,8 @@ button:hover {
   width: 100%;
   margin: 0.5em 0;
 }
+
+#quiz-score {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
