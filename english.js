@@ -13,6 +13,21 @@ const words = [
     word: 'car',
     img: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Red_car.svg',
     options: ['carr', 'kar', 'car', 'carr']
+  },
+  {
+    word: 'elephant',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg',
+    options: ['elefant', 'elephant', 'alefant', 'elephent']
+  },
+  {
+    word: 'umbrella',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/9/9f/Closed_umbrella_black.svg',
+    options: ['umbrella', 'umberella', 'umbrela', 'umbrellaa']
+  },
+  {
+    word: 'orange',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg',
+    options: ['oranj', 'orange', 'orrange', 'orage']
   }
 ];
 let score = 0;

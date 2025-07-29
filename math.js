@@ -2,6 +2,16 @@ let score = 0;
 let questions = 0;
 
 function nextQuestion() {
+  const a = Math.floor(Math.random() * 900) + 100;
+  const b = Math.floor(Math.random() * 900) + 100;
+  const op = Math.random() < 0.5 ? '+' : '-';
+  const values = op === '-' && b > a ? [b, a] : [a, b];
+  const answer = op === '+' ? a + b : values[0] - values[1];
+  const questionEl = document.getElementById('math-question');
+  const displayA = op === '-' ? values[0] : a;
+  const displayB = op === '-' ? values[1] : b;
+  questionEl.textContent = `${displayA} ${op} ${displayB} = ?`;
+
   const a = Math.floor(Math.random() * 10) + 1;
   const b = Math.floor(Math.random() * 10) + 1;
   const op = Math.random() < 0.5 ? '+' : '-';
@@ -13,6 +23,7 @@ function nextQuestion() {
   optionsDiv.innerHTML = '';
   const options = [answer];
   while (options.length < 4) {
+    let val = answer + Math.floor(Math.random() * 101) - 50;
     let val = answer + Math.floor(Math.random() * 5) - 2;
     if (!options.includes(val)) options.push(val);
   }
