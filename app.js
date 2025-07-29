@@ -9,15 +9,13 @@ let score = 0;
 let questionsAsked = 0;
 
 async function init() {
-  // Load data first so clicking works immediately once map appears
-  await loadCountries();
-  await loadMap();
+  // Load both in parallel for faster startup
+  await Promise.all([loadCountries(), loadMap()]);
   document.getElementById('quizBtn').onclick = startQuizMode;
   document.getElementById('quiz-exit').onclick = exitQuizMode;
 }
 
 async function loadCountries() {
-  // request only the fields we need to avoid a large payload
   const url = 'https://restcountries.com/v3.1/all?fields=name,cca2,cca3,ccn3,capital,region,population';
   let data;
   try {
@@ -27,6 +25,7 @@ async function loadCountries() {
     console.error('Failed to load country data', err);
     return;
   }
+
   countriesData = data.map(c => {
     const obj = {
       id: c.cca3,
@@ -54,6 +53,7 @@ async function loadMap() {
     console.error('Failed to load map data', err);
     return;
   }
+
   const width = Math.min(960, window.innerWidth * 0.9);
   const height = width * 0.5;
   const projection = d3.geoNaturalEarth1().fitSize([width, height], geoData);
@@ -170,9 +170,9 @@ function shuffle(arr) {
   return arr;
 }
 
+// Initialize app once DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
-  // DOM already ready when script loaded
   init();
 }
