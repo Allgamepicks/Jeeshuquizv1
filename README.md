@@ -13,5 +13,15 @@ This project now includes multiple learning activities for kids. The original wo
 - `index.html` links to the learning activities. Open `map.html` to view the interactive world map.
 - Consistent Arial-based font across desktop and mobile.
 
-To run locally, serve the files with any simple HTTP server (for example `npx serve`) and open `index.html` in a modern browser with internet access. Directly opening the file may block network requests in some browsers.
+## How to Run Locally
+
+> ⚠️ Opening `index.html` directly may block network requests due to browser security. Always use a local server.
+
+1. Install [Node.js](https://nodejs.org/) (if not already).
+2. In the project folder, run:
+   ```bash
+   npx serve
+   ```
+3. Open the provided local URL in a browser.
+
 If the app cannot reach the country API, an error message is shown below the map.
