@@ -28,20 +28,28 @@ async function loadCountries() {
     document.getElementById('error').classList.add('hidden');
   } catch (err) {
     console.error('Failed to load country data', err);
-    document.getElementById('error').textContent = 'Failed to load country data.';
-    document.getElementById('error').classList.remove('hidden');
-    return;
+    // try local fallback
+    try {
+      const res = await fetch('countries.json');
+      data = await res.json();
+      dataLoaded = true;
+      document.getElementById('error').classList.add('hidden');
+    } catch (err2) {
+      document.getElementById('error').textContent = 'Failed to load country data.';
+      document.getElementById('error').classList.remove('hidden');
+      return;
+    }
   }
   countriesData = data.map(c => {
     const obj = {
-      id: c.cca3,
-      name: c.name.common,
-      flag: `https://flagcdn.com/w80/${c.cca2.toLowerCase()}.png`,
-      capital: c.capital ? c.capital[0] : 'N/A',
+      id: c.cca3 || c.id,
+      name: c.name?.common || c.name,
+      flag: c.flag || `https://flagcdn.com/w80/${c.cca2.toLowerCase()}.png`,
+      capital: Array.isArray(c.capital) ? c.capital[0] : c.capital,
       region: c.region,
       population: c.population,
       cca2: c.cca2,
-      cca3: c.cca3,
+      cca3: c.cca3 || c.id,
       ccn3: c.ccn3
     };
     countryByIso2[obj.cca2] = obj;
@@ -57,8 +65,9 @@ async function loadMap() {
     geoData = await d3.json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson');
   } catch (err) {
     console.error('Failed to load map data', err);
-    document.getElementById('error').textContent = 'Failed to load map.';
+    document.getElementById('error').textContent = 'Failed to load map. Using fallback map.';
     document.getElementById('error').classList.remove('hidden');
+    await loadFallbackMap();
     return;
   }
   const width = Math.min(1200, window.innerWidth * 0.95);
@@ -103,6 +112,44 @@ async function loadMap() {
     .on('mouseout', () => {
       document.getElementById('tooltip').classList.add('hidden');
     });
+}
+
+async function loadFallbackMap() {
+  try {
+    const res = await fetch('world_map.svg');
+    const svgText = await res.text();
+    document.getElementById('map-container').innerHTML = svgText;
+    document.querySelectorAll('#map-container .country').forEach(el => {
+      const id = el.id;
+      el.addEventListener('click', () => {
+        const country = countryByIso3[id] || countryByIso2[id] || countryByNum[id];
+        if (country) {
+          if (!quizMode) showCountryInfo(country, el);
+          else handleQuizClick(country);
+        }
+      });
+      el.addEventListener('mouseover', event => {
+        const country = countryByIso3[id] || countryByIso2[id] || countryByNum[id];
+        if (country) {
+          const tooltip = document.getElementById('tooltip');
+          tooltip.textContent = country.name;
+          tooltip.style.left = event.pageX + 'px';
+          tooltip.style.top = event.pageY + 'px';
+          tooltip.classList.remove('hidden');
+        }
+      });
+      el.addEventListener('mousemove', event => {
+        const tooltip = document.getElementById('tooltip');
+        tooltip.style.left = event.pageX + 'px';
+        tooltip.style.top = event.pageY + 'px';
+      });
+      el.addEventListener('mouseout', () => {
+        document.getElementById('tooltip').classList.add('hidden');
+      });
+    });
+  } catch (err) {
+    console.error('Failed to load fallback map', err);
+  }
 }
 
 function showCountryInfo(country, el) {

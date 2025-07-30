@@ -1,0 +1,11 @@
+<!-- Simple SVG world map with a few countries for offline use -->
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <path id="IN" class="country" d="M500,200 l20,10 l-10,20 l-20,-10 z" fill="#81d4fa"/>
+    <path id="US" class="country" d="M100,100 l60,10 l-10,40 l-60,-10 z" fill="#ffab91"/>
+    <path id="BR" class="country" d="M200,300 l40,20 l-20,30 l-40,-20 z" fill="#a5d6a7"/>
+    <path id="AU" class="country" d="M700,350 l30,10 l-10,20 l-30,-10 z" fill="#ffd54f"/>
+    <path id="EG" class="country" d="M400,180 l20,5 l-5,20 l-20,-5 z" fill="#ce93d8"/>
+    <path id="FR" class="country" d="M350,120 l15,5 l-5,15 l-15,-5 z" fill="#fff176"/>
+  </g>
+</svg>

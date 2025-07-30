@@ -1,0 +1,68 @@
+[
+  {
+    "id": "IN",
+    "name": "India",
+    "flag": "https://flagcdn.com/w80/in.png",
+    "capital": "New Delhi",
+    "region": "Asia",
+    "population": 1380000000,
+    "cca2": "IN",
+    "cca3": "IND",
+    "ccn3": "356"
+  },
+  {
+    "id": "US",
+    "name": "United States",
+    "flag": "https://flagcdn.com/w80/us.png",
+    "capital": "Washington, D.C.",
+    "region": "North America",
+    "population": 331000000,
+    "cca2": "US",
+    "cca3": "USA",
+    "ccn3": "840"
+  },
+  {
+    "id": "BR",
+    "name": "Brazil",
+    "flag": "https://flagcdn.com/w80/br.png",
+    "capital": "Bras\u00edlia",
+    "region": "South America",
+    "population": 213000000,
+    "cca2": "BR",
+    "cca3": "BRA",
+    "ccn3": "076"
+  },
+  {
+    "id": "AU",
+    "name": "Australia",
+    "flag": "https://flagcdn.com/w80/au.png",
+    "capital": "Canberra",
+    "region": "Oceania",
+    "population": 25687041,
+    "cca2": "AU",
+    "cca3": "AUS",
+    "ccn3": "036"
+  },
+  {
+    "id": "EG",
+    "name": "Egypt",
+    "flag": "https://flagcdn.com/w80/eg.png",
+    "capital": "Cairo",
+    "region": "Africa",
+    "population": 100000000,
+    "cca2": "EG",
+    "cca3": "EGY",
+    "ccn3": "818"
+  },
+  {
+    "id": "FR",
+    "name": "France",
+    "flag": "https://flagcdn.com/w80/fr.png",
+    "capital": "Paris",
+    "region": "Europe",
+    "population": 67000000,
+    "cca2": "FR",
+    "cca3": "FRA",
+    "ccn3": "250"
+  }
+]
